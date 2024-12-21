@@ -1,14 +1,15 @@
 package com.kotlin.educationalcenter.utils
 
 import com.kotlin.educationalcenter.entities.TutorEntity
-import com.kotlin.educationalcenter.models.TutorDTO
+import com.kotlin.educationalcenter.models.TutorRequestDTO
+import com.kotlin.educationalcenter.models.TutorResponseDTO
 import org.springframework.stereotype.Component
 
 @Component
 class TutorsMapper {
 
-    fun toDTO(entity: TutorEntity) =
-        TutorDTO(
+    fun toResponseDTO(entity: TutorEntity) =
+        TutorResponseDTO(
             id = entity.id,
             firstName = entity.firstName,
             lastName = entity.lastName,
@@ -16,15 +17,14 @@ class TutorsMapper {
             paymentPerHour = entity.paymentPerHour
         )
 
-    fun toEntity(dto: TutorDTO): TutorEntity =
+    fun toEntity(dto: TutorRequestDTO): TutorEntity =
         TutorEntity(
-            id = dto.id,
             firstName = dto.firstName,
             lastName = dto.lastName,
             subject = dto.subject,
             paymentPerHour = dto.paymentPerHour
         )
 
-    fun toDTOList(entities: List<TutorEntity>): List<TutorDTO> =
-        entities.map(::toDTO)
+    fun toResponseDTOList(entities: List<TutorEntity>): List<TutorResponseDTO> =
+        entities.map(::toResponseDTO)
 }

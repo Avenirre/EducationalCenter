@@ -1,10 +1,8 @@
 package com.kotlin.educationalcenter.models
 
-data class TutorDTO(
-
-    val id: Long = 0,
+data class TutorRequestDTO(
     val firstName: String,
     val lastName: String,
-    var subject: String,
-    var paymentPerHour: Float
+    val subject: String,
+    val paymentPerHour: Float
 )

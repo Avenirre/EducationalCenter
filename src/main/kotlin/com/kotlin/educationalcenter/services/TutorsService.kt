@@ -1,6 +1,7 @@
 package com.kotlin.educationalcenter.services
 
-import com.kotlin.educationalcenter.models.TutorDTO
+import com.kotlin.educationalcenter.models.TutorRequestDTO
+import com.kotlin.educationalcenter.models.TutorResponseDTO
 import com.kotlin.educationalcenter.repositories.TutorsRepository
 import com.kotlin.educationalcenter.utils.TutorsMapper
 import org.springframework.stereotype.Service
@@ -10,11 +11,11 @@ class TutorsService(private val tutorsRepository: TutorsRepository,
                     private val tutorsMapper: TutorsMapper
 ) {
 
-    fun getAllTutors(): List<TutorDTO> = tutorsMapper.toDTOList(tutorsRepository.findAll())
+    fun getAllTutors(): List<TutorResponseDTO> = tutorsMapper.toResponseDTOList(tutorsRepository.findAll())
 
-    fun createTutor(tutorDTO: TutorDTO): TutorDTO {
-        val tutorEntity = tutorsMapper.toEntity(tutorDTO)
+    fun createTutor(tutorRequest: TutorRequestDTO): TutorResponseDTO {
+        val tutorEntity = tutorsMapper.toEntity(tutorRequest)
         val savedTutor = tutorsRepository.save(tutorEntity)
-        return tutorsMapper.toDTO(savedTutor)
+        return tutorsMapper.toResponseDTO(savedTutor)
     }
 }
