@@ -11,4 +11,10 @@ class TutorsService(private val tutorsRepository: TutorsRepository,
 ) {
 
     fun getAllTutors(): List<TutorDTO> = tutorsMapper.toDTOList(tutorsRepository.findAll())
+
+    fun createTutor(tutorDTO: TutorDTO): TutorDTO {
+        val tutorEntity = tutorsMapper.toEntity(tutorDTO)
+        val savedTutor = tutorsRepository.save(tutorEntity)
+        return tutorsMapper.toDTO(savedTutor)
+    }
 }
