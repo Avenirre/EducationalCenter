@@ -1,5 +1,6 @@
 package com.kotlin.educationalcenter.services
 
+import com.kotlin.educationalcenter.exceptions.TutorAlreadyExistsException
 import com.kotlin.educationalcenter.models.TutorRequestDTO
 import com.kotlin.educationalcenter.models.TutorResponseDTO
 import com.kotlin.educationalcenter.repositories.TutorsRepository
@@ -21,6 +22,10 @@ class TutorsService(private val tutorsRepository: TutorsRepository,
             .orElseThrow { TutorNotFoundException(id) }
 
     fun createTutor(tutorRequest: TutorRequestDTO): TutorResponseDTO {
+        if (tutorsRepository.existsByFirstNameAndLastName(tutorRequest.firstName, tutorRequest.lastName)) {
+            throw TutorAlreadyExistsException(tutorRequest.firstName, tutorRequest.lastName)
+        }
+
         val tutorEntity = tutorsMapper.toEntity(tutorRequest)
         val savedTutor = tutorsRepository.save(tutorEntity)
         return tutorsMapper.toResponseDTO(savedTutor)

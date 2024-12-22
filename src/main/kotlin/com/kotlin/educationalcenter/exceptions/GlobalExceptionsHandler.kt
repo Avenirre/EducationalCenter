@@ -14,6 +14,13 @@ class GlobalExceptionHandler {
             .status(HttpStatus.NOT_FOUND)
             .body(ErrorResponse(e.message))
     }
+
+    @ExceptionHandler(TutorAlreadyExistsException::class)
+    fun handleTutorAlreadyExists(e: TutorAlreadyExistsException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(ErrorResponse(e.message))
+    }
 }
 
 data class ErrorResponse(

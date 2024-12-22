@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TutorsRepository : JpaRepository<TutorEntity, Long> {
+
+    fun existsByFirstNameAndLastName(firstName: String, lastName: String): Boolean
 }
