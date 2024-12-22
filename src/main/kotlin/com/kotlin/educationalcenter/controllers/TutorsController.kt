@@ -2,6 +2,7 @@ package com.kotlin.educationalcenter.controllers
 
 import com.kotlin.educationalcenter.models.TutorRequestDTO
 import com.kotlin.educationalcenter.models.TutorResponseDTO
+import com.kotlin.educationalcenter.models.TutorUpdateDTO
 import com.kotlin.educationalcenter.services.TutorsService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -27,5 +28,22 @@ class TutorsController(private val tutorsService: TutorsService) {
     fun createTutor(@RequestBody tutorRequest: TutorRequestDTO): ResponseEntity<TutorResponseDTO> {
         val createdTutor = tutorsService.createTutor(tutorRequest)
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTutor)
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update tutor's data")
+    fun updateTutor(
+        @PathVariable id: Long,
+        @RequestBody tutorUpdate: TutorUpdateDTO
+    ): ResponseEntity<TutorResponseDTO> {
+        val updatedTutor = tutorsService.updateTutor(id, tutorUpdate)
+        return ResponseEntity.ok(updatedTutor)
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove tutor by id")
+    fun deleteTutor(@PathVariable id: Long): ResponseEntity<Unit> {
+        tutorsService.deleteTutor(id)
+        return ResponseEntity.noContent().build()
     }
 }
